@@ -52,16 +52,16 @@ const Navbar = () => {
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center space-x-1">
                         <Link href="/trending-techs" className="px-4 py-2 text-slate-700 hover:text-violet-600 transition-colors">
-                            Trending Technologies
+                            Industry Insights
                         </Link>
 
                         {/* Custom Dropdown */}
                         <div className="relative" ref={dropdownRef}>
                             <button
                                 onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
-                                className="px-4 py-2 text-slate-700 hover:text-violet-600 transition-colors flex items-center gap-1"
+                                className="px-4 py-2 text-slate-700 hover:text-violet-600 transition-colors flex items-center gap-1 cursor-pointer"
                             >
-                                Tools
+                                Growth Tools
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className={`h-4 w-4 transition-transform ${isToolsDropdownOpen ? "rotate-180" : ""}`}
@@ -138,12 +138,8 @@ const Navbar = () => {
                                 </div>
                             )}
                         </div>
-
-                        <Link
-                            href="/signup"
-                            className="ml-2 px-4 py-2 rounded-md bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-medium transition-colors"
-                        >
-                            Get Started
+                        <Link href="/login" className="px-4 py-2 text-gray-100 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors font-semibold">
+                            Sign In
                         </Link>
                     </nav>
 
@@ -186,11 +182,11 @@ const Navbar = () => {
                             className="block py-2 text-slate-700 hover:text-violet-600"
                             onClick={() => setIsMobileMenuOpen(false)}
                         >
-                            Trending Technologies
+                            Industry Insights
                         </Link>
 
                         <div className="space-y-2">
-                            <p className="text-sm font-medium text-slate-500">Tools</p>
+                            <p className="text-sm font-medium text-slate-500">Growth Tools</p>
                             <Link
                                 href="/resume-builder"
                                 className="flex items-center gap-2 py-2 text-slate-700 hover:text-violet-600"
