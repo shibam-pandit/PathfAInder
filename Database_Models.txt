@@ -1,0 +1,60 @@
+CREATE TABLE industry_insights (
+    id SERIAL PRIMARY KEY,
+    industry VARCHAR(255) NOT NULL,
+    salaryRanges JSON[],  -- Array of JSON objects
+    growthRate FLOAT,
+    demandLevel VARCHAR(100),
+    topSkills TEXT[],  -- Array of strings
+    marketOutLook TEXT,
+    keyTrends TEXT[],  -- Array of strings
+    recommendedSkills TEXT[],  -- Array of strings
+    lastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    nextUpdate TIMESTAMP
+);
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    imageUrl TEXT,
+    industry INT REFERENCES industry_insights(id),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    bio TEXT,
+    experience INT,
+    skills TEXT[],  -- Postgres array type
+    CONSTRAINT chk_experience_non_negative CHECK (experience >= 0)
+);
+
+CREATE TABLE resume (
+    id SERIAL PRIMARY KEY,
+    userId INT REFERENCES users(id) ON DELETE CASCADE,
+    content VARCHAR(255),
+    atsScore DECIMAL(5,2),
+    feedback TEXT,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE coverletter (
+    id SERIAL PRIMARY KEY,
+    userId INT REFERENCES users(id) ON DELETE CASCADE,
+    content TEXT,
+    jobDescription TEXT,
+    companyName VARCHAR(255),
+    jobTitle VARCHAR(255),
+    status VARCHAR(50),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE assessment (
+	id SERIAL PRIMARY KEY,
+	userId INT REFERENCES users(id),
+	quizscore FLOAT,
+	questions JSONB[],  -- Assuming you want an array of JSON objects
+	category TEXT,
+	improvementTip VARCHAR(255),
+	createdAt TIMESTAMP DEFAULT NOW(),
+	updatedAt TIMESTAMP DEFAULT NOW()
+);

@@ -17,33 +17,33 @@ const Register = () => {
 
   const router = useRouter();
 
-const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!name || !email || !password) {
-        toast.error("Please fill in all fields", {
-            description: "Email and password are required"
-        });
-        return;
+      toast.error("Please fill in all fields", {
+        description: "Email and password are required"
+      });
+      return;
     }
 
-    if(name.length < 3) {
-        toast.error("Name must be at least 3 characters long", {
-            description: "Please enter a valid name"
-        });
-        return;
+    if (name.length < 3) {
+      toast.error("Name must be at least 3 characters long", {
+        description: "Please enter a valid name"
+      });
+      return;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-        toast.error("Please enter a valid email address", {
-            description: "Email format is invalid"
-        });
-        return;
+      toast.error("Please enter a valid email address", {
+        description: "Email format is invalid"
+      });
+      return;
     }
 
     if (password.length < 6) {
-        toast.error("Password must be at least 6 characters long");
-        return;
+      toast.error("Password must be at least 6 characters long");
+      return;
     }
 
     axios.post('/api/auth/register', {
@@ -51,35 +51,36 @@ const handleSubmit = (e) => {
       email,
       password
     })
-    .then((res) => {
-      if (res.status === 201) {
-        toast.success("Account created successfully", {
-          description: "Thank you for signing up!"
-        });
-        
-        signIn('credentials', {
-          email,
-          password,
-          redirect: false
-        }).then((res) => {
-          if (res?.error) {
-            toast.error("Fail to Login", {
-              description: "Please Login manually to your account"
-            });
-          } else {
-            toast.success("Logged in successfully", {
-              description: "Welcome back!"
-            });
-            router.push('/dashboard');
-          }
-        });
-      } else {
-        toast.error("Something went wrong", {
-          description: "Please try again later"
-        });
-      }
-    })
-};
+      .then((res) => {
+        if (res.status === 201) {
+          toast.success("Account created successfully", {
+            description: "Thank you for signing up!"
+          });
+
+          signIn('credentials', {
+            email,
+            password,
+            redirect: false
+          }).then((res) => {
+            if (res?.error) {
+              toast.error("Fail to Login", {
+                description: "Please Login manually to your account"
+              });
+            } else {
+              toast.success("Logged in successfully", {
+                description: "Welcome back!"
+              });
+              localStorage.setItem('user', JSON.stringify(res?.user));
+              router.push('/home');
+            }
+          });
+        } else {
+          toast.error("Something went wrong", {
+            description: "Please try again later"
+          });
+        }
+      })
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-white to-blue-200 flex items-center justify-center p-4">
@@ -98,7 +99,7 @@ const handleSubmit = (e) => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+            <div className="space-y-2">
               <div className="relative">
                 <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <Input

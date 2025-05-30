@@ -1,12 +1,13 @@
 import "./globals.css";
-// import { Toaster } from "@/components/ui/toaster";
+import SessionProviderWrapper from "@/app/providres/SessionProviderWrapper";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
-        {/* <Toaster /> */}
+        <SessionProviderWrapper>
+          {children}
+        </SessionProviderWrapper>
       </body>
     </html>
   );

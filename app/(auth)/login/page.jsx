@@ -15,19 +15,19 @@ const Login = () => {
 
   const router = useRouter();
 
-const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-        toast.error("Please fill in all fields", {
-            description: "Email and password are required"
-        });
-        return;
+      toast.error("Please fill in all fields", {
+        description: "Email and password are required"
+      });
+      return;
     }
 
     if (password.length < 6) {
-        toast.error("Password must be at least 6 characters long");
-        return;
+      toast.error("Password must be at least 6 characters long");
+      return;
     }
 
     signIn('credentials', {
@@ -35,19 +35,20 @@ const handleSubmit = (e) => {
       password,
       redirect: false
     })
-    .then((res) => {
-      if (res?.error) {
-        toast.error("Invalid credentials", {
-          description: "Please check your email and password"
-        });
-      } else {
-        toast.success("Logged in successfully", {
-          description: "Welcome back!"
-        });
-        router.push('/dashboard');
-      }
-    })
-};
+      .then((res) => {
+        if (res?.error) {
+          toast.error("Invalid credentials", {
+            description: "Please check your email and password"
+          });
+        } else {
+          toast.success("Logged in successfully", {
+            description: "Welcome back!"
+          });
+          localStorage.setItem('user', JSON.stringify(res?.user));
+          router.push('/home');
+        }
+      })
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-white to-blue-200 flex items-center justify-center p-4">
