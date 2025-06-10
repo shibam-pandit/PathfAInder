@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
@@ -5,7 +8,7 @@ import GitHubProvider from 'next-auth/providers/github';
 import { compare } from 'bcrypt'; // Or any password hashing method you use
 import { getUserByEmail } from '@/lib/services/auth.service.js'; // Your custom SQL function
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -71,6 +74,8 @@ const handler = NextAuth({
   pages: {
     signIn: '/login',  // your custom login page
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
