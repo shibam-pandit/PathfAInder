@@ -61,7 +61,6 @@ const OnboardingForm = () => {
             const response = await axios.post('/api/users/onboarding-update', {
                 onboardingData: onboardingData
             });
-            console.log('Onboarding response:', response);
             if (response.status === 200) {
                 setLoading(false);
                 toast.success('Onboarding completed successfully!');
@@ -80,7 +79,7 @@ const OnboardingForm = () => {
 
     return (
         <div className="py-32 min-h-screen bg-gradient-to-br from-purple-100 via-white to-purple-50 flex justify-center items-center p-4">
-            <Toaster />
+            <Toaster position='top-center' richColors closeButton={false} />
             <div className="w-full max-w-2xl bg-white/90 backdrop-blur-sm p-8 shadow-2xl rounded-3xl border border-purple-200/50">
                 {/* Header */}
                 <div className="text-center mb-8">

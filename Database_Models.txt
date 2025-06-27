@@ -50,11 +50,11 @@ CREATE TABLE coverletter (
 
 CREATE TABLE assessment (
 	id SERIAL PRIMARY KEY,
-	userId INT REFERENCES users(id),
+	userid INT REFERENCES users(id),
 	quizscore FLOAT,
-	questions JSONB[],  -- Assuming you want an array of JSON objects
+	questions JSONB[],
 	category TEXT,
-	improvementTip VARCHAR(255),
-	createdAt TIMESTAMP DEFAULT NOW(),
-	updatedAt TIMESTAMP DEFAULT NOW()
+	improvementtip TEXT,
+	createdat TIMESTAMP DEFAULT NOW(),
+	updatedat TIMESTAMP DEFAULT NOW()
 );

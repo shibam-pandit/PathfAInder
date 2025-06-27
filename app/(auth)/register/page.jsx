@@ -84,7 +84,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-white to-blue-200 flex items-center justify-center p-4">
-      <Toaster />
+      <Toaster position='top-center' richColors closeButton={false} />
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6 border border-gray-100">
           {/* Header */}

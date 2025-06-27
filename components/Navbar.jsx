@@ -11,6 +11,7 @@ const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false)
     const dropdownRef = useRef(null)
+    const mobileMenuRef = useRef(null)
 
     // Handle scroll effect for navbar
     useEffect(() => {
@@ -32,6 +33,13 @@ const Navbar = () => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setIsToolsDropdownOpen(false)
             }
+            
+            // Close mobile menu when clicking outside
+            if (mobileMenuRef.current && 
+                !mobileMenuRef.current.contains(event.target) && 
+                !event.target.closest('button[aria-label="Toggle mobile menu"]')) {
+                setIsMobileMenuOpen(false)
+            }
         }
 
         document.addEventListener("mousedown", handleClickOutside)
@@ -40,15 +48,15 @@ const Navbar = () => {
 
     return (
         <header
-            className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white/50 backdrop-blur-md shadow-sm" : "bg-transparent"
+            className={`fixed top-0 w-full z-50 transition-all duration-300 bg-transparent ${isScrolled ? "backdrop-blur-md shadow-sm" : ""
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 md:h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center">
-                        <span className="font-bold text-2xl md:text-3xl bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
-                            pathf<span className="text-teal-500">AI</span>nder
+                        <span className="font-bold text-2xl md:text-3xl bg-gradient-to-r from-violet-800 to-purple-800 bg-clip-text text-transparent">
+                            Pathf<span className="text-teal-500">AI</span>nder
                         </span>
                     </Link>
 
@@ -56,7 +64,7 @@ const Navbar = () => {
                     {isAuthenticated ? (
                         <>
                             <nav className="hidden md:flex items-center space-x-1">
-                                <Link href="/trending-techs" className="px-4 py-2 text-slate-700 hover:text-violet-600 transition-colors">
+                                <Link href="/home" className="px-4 py-2 text-slate-700 hover:text-violet-600 transition-colors">
                                     Industry Insights
                                 </Link>
 
@@ -83,6 +91,7 @@ const Navbar = () => {
                                             <Link
                                                 href="/resume-builder"
                                                 className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-violet-600"
+                                                onClick={() => setIsToolsDropdownOpen(false)}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -103,6 +112,7 @@ const Navbar = () => {
                                             <Link
                                                 href="/cover-letter"
                                                 className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-violet-600"
+                                                onClick={() => setIsToolsDropdownOpen(false)}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -123,6 +133,7 @@ const Navbar = () => {
                                             <Link
                                                 href="/interview-prep"
                                                 className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-violet-600"
+                                                onClick={() => setIsToolsDropdownOpen(false)}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -149,6 +160,7 @@ const Navbar = () => {
                             <button
                                 className="md:hidden p-2 rounded-md text-slate-700 hover:text-violet-600 hover:bg-slate-100 focus:outline-none"
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                aria-label="Toggle mobile menu"
                             >
                                 {isMobileMenuOpen ? (
                                     <svg
@@ -183,10 +195,10 @@ const Navbar = () => {
 
             {/* Mobile menu */}
             {isMobileMenuOpen && (
-                <div className="md:hidden bg-white border-t border-slate-100 shadow-lg">
+                <div className="md:hidden bg-white border-t border-slate-100 shadow-lg" ref={mobileMenuRef}>
                     <div className="container mx-auto px-4 py-4 space-y-4">
                         <Link
-                            href="/trending-techs"
+                            href="/home"
                             className="block py-2 text-slate-700 hover:text-violet-600"
                             onClick={() => setIsMobileMenuOpen(false)}
                         >

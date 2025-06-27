@@ -16,7 +16,10 @@ const UserProtectedRoute = ({ children }) => {
   }, [status, router])
 
   if (status === 'loading') {
-    return <div>Loading...</div>
+    return <div className="flex flex-col space-y-2 items-center justify-center min-h-screen bg-purple-50/35">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-purple-500"></div>
+      <p className="text-gray-700 text-lg mt-4">Loading...</p>
+    </div>
   }
 
   if (status === 'unauthenticated') {

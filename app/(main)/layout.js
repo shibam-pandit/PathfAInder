@@ -1,17 +1,15 @@
-import UserProtectedRoute from "@/app/providres/UserProtectedRoute";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import UserProtectedRoute from '@/app/providres/UserProtectedRoute';
+import { LayoutVisibilityProvider } from '../providres/LayoutVisibilityContext';
+import QuizWrapper from '../providres/quizWrapper'; 
 
-export default function RootLayout({ children }) {
+export default function MainLayout({ children }) {
     return (
-        <html lang="en">
-            <body>
-                <UserProtectedRoute>
-                    <Navbar />
+        <UserProtectedRoute>
+            <LayoutVisibilityProvider>
+                <QuizWrapper>
                     {children}
-                    <Footer />
-                </UserProtectedRoute>
-            </body>
-        </html>
+                </QuizWrapper>
+            </LayoutVisibilityProvider>
+        </UserProtectedRoute>
     );
 }
