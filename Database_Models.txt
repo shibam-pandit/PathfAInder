@@ -28,12 +28,13 @@ CREATE TABLE users (
 
 CREATE TABLE resume (
     id SERIAL PRIMARY KEY,
-    userId INT REFERENCES users(id) ON DELETE CASCADE,
-    content VARCHAR(255),
-    atsScore DECIMAL(5,2),
-    feedback TEXT,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    userid INT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+    formdata JSONB, -- store the entire form object here
+    markdown TEXT,  -- store the markdown version of the resume here
+    atsscore DECIMAL(5,2), -- assuming this is a number between 0.00 - 100.00
+    feedback TEXT, -- for AI or human feedback
+    createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE coverletter (
