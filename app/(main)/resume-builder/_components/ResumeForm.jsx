@@ -293,10 +293,8 @@ const ResumeForm = ({ formData }) => {
 
             toast.dismiss();
             toast.success('Resume submitted successfully!');
-            setTimeout(() => {
-                toast.info('You can view your resume in the "View" tab.');
-            }, 1000);
             setLoading(false);
+            window.location.reload();
 
         } catch (error) {
             setLoading(false);
@@ -308,15 +306,14 @@ const ResumeForm = ({ formData }) => {
 
     return (
         <div className=''>
-            <Toaster position="top-center" richColors closeButton={false} />
-            <form className="space-y-4" onSubmit={submitHandler}>
-                <h3 className="text-2xl font-bold text-gray-800 col-span-2 py-2 pt-5">Basic Information</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 space-x-12">
+            <form className="space-y-4 sm:space-y-6" onSubmit={submitHandler}>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 col-span-2 py-2 pt-3 sm:pt-5">Basic Information</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     <div className="flex flex-col space-y-2">
                         <label className="text-sm font-medium text-gray-700">Name</label>
                         <input
                             type="text"
-                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base"
                             placeholder="First Last"
                             value={basicInfo.name}
                             onChange={(e) => setBasicInfo({ ...basicInfo, name: e.target.value })}
@@ -327,7 +324,7 @@ const ResumeForm = ({ formData }) => {
                         <label className="text-sm font-medium text-gray-700">Email</label>
                         <input
                             type="email"
-                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base"
                             placeholder="abc@ex.com"
                             value={basicInfo.email}
                             onChange={(e) => setBasicInfo({ ...basicInfo, email: e.target.value })}
@@ -338,7 +335,7 @@ const ResumeForm = ({ formData }) => {
                         <label className="text-sm font-medium text-gray-700">Contact Number</label>
                         <input
                             type="text"
-                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base"
                             placeholder="+91 123456789"
                             value={basicInfo.contactNumber}
                             onChange={(e) => setBasicInfo({ ...basicInfo, contactNumber: e.target.value })}
@@ -349,7 +346,7 @@ const ResumeForm = ({ formData }) => {
                         <label className="text-sm font-medium text-gray-700">GitHub</label>
                         <input
                             type="url"
-                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base"
                             placeholder="https://github.com/username"
                             value={basicInfo.github}
                             onChange={(e) => setBasicInfo({ ...basicInfo, github: e.target.value })}
@@ -359,7 +356,7 @@ const ResumeForm = ({ formData }) => {
                         <label className="text-sm font-medium text-gray-700">LinkedIn</label>
                         <input
                             type="url"
-                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base"
                             placeholder="https://linkedin.com/username"
                             value={basicInfo.linkedin}
                             onChange={(e) => setBasicInfo({ ...basicInfo, linkedin: e.target.value })}
@@ -369,7 +366,7 @@ const ResumeForm = ({ formData }) => {
                         <label className="text-sm font-medium text-gray-700">Portfolio</label>
                         <input
                             type="url"
-                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base"
                             placeholder="https://portfolio.com"
                             value={basicInfo.portfolio}
                             onChange={(e) => setBasicInfo({ ...basicInfo, portfolio: e.target.value })}
@@ -377,10 +374,10 @@ const ResumeForm = ({ formData }) => {
                     </div>
                 </div>
 
-                <h3 className="text-2xl font-bold text-gray-800 col-span-2 pt-5 mt-10">Professional Summary</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 col-span-2 pt-5 sm:pt-8 mt-6 sm:mt-10">Professional Summary</h3>
                 <div className="relative">
                     <textarea
-                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base"
                         rows="4"
                         placeholder="Write a brief summary about your professional background, skills, and career goals."
                         value={professionalSummary}
@@ -396,8 +393,8 @@ const ResumeForm = ({ formData }) => {
                     </button>
                 </div>
 
-                <div className="flex flex-col justify-between gap-5 items-start pt-5 mt-10">
-                    <h3 className="text-2xl font-bold text-gray-800">Work Experience</h3>
+                <div className="flex flex-col justify-between gap-3 sm:gap-5 items-start pt-5 sm:pt-8 mt-6 sm:mt-10">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800">Work Experience</h3>
                     {workExperiences.length === 0 && (
                         <button
                             type="button"

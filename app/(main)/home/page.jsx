@@ -1,13 +1,11 @@
 import React from 'react'
-import { getServerSession } from "next-auth";
 import { checkOnboardingCompleteStatus } from '@/lib/services/users.service'
 import OnboardingForm from './_component/Onboarding';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getIndustryInsights } from '@/lib/services/industry_insights.service';
 import Dashboard from './_component/Dashboard';
 import { format } from 'date-fns'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { TrendingUp, Zap, BarChart3, Award, CheckCircle, ListTree, Calendar } from 'lucide-react'
+import { TrendingUp, Zap, BarChart3, Award, CheckCircle, ListTree, Calendar, AlertTriangle } from 'lucide-react'
 
 const InfoCard = async ({ title, content, icon, description }) => {
   'use server'
@@ -66,11 +64,51 @@ export default async function Home() {
     return <OnboardingForm />
   }
 
-  const industry = await getIndustryInsights();
-  if (!industry) {
+  let industry = null;
+  let hasError = false;
+  let errorMessage = '';
+
+  try {
+    industry = await getIndustryInsights();
+  } catch (error) {
+    console.error('Failed to fetch industry insights:', error);
+    hasError = true;
+    
+    // Check for specific error types
+    if (error.message.includes('AI_SERVICE_UNAVAILABLE') || error.message.includes('AI service temporarily unavailable')) {
+      errorMessage = 'Industry insights are temporarily unavailable due to high AI service demand. Other features are still accessible.';
+    } else if (error.message.includes('User has no industry set')) {
+      errorMessage = 'Please complete your profile setup to view industry insights.';
+    } else {
+      errorMessage = 'Unable to load industry insights at the moment. Please try again later.';
+    }
+  }
+
+  // If there's an error or no industry data, show error UI
+  if (hasError || !industry) {
     return (
-      <div className='min-h-screen flex items-center justify-center text-2xl font-bold'>
-        No industry insights available. Please complete your onboarding.
+      <div className="min-h-screen p-4 sm:p-6 lg:p-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto pt-32">
+          <div className="text-center">
+            <div className="mx-auto flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-6">
+              <AlertTriangle className="w-8 h-8 text-orange-600" />
+            </div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+              Industry Insights Unavailable
+            </h1>
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+              {errorMessage}
+            </p>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-2xl mx-auto">
+              <h3 className="text-lg font-semibold text-blue-900 mb-2" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+                Other Features Available
+              </h3>
+              <p className="text-blue-700" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+                You can still access interview preparation, resume builder, and resume analyzer features while we work on restoring industry insights.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -94,6 +132,19 @@ export default async function Home() {
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-7" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
             Industry Insights
           </h1>
+          
+          {/* Show warning if data might be stale */}
+          {industry.isStale && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6 max-w-2xl mx-auto">
+              <div className="flex items-center justify-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-yellow-600" />
+                <p className="text-sm text-yellow-800" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+                  Data may not be current due to service limitations. Information shown is from the last successful update.
+                </p>
+              </div>
+            </div>
+          )}
+          
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0 sm:space-x-6 text-sm text-gray-600" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-purple-600" />

@@ -1,19 +1,19 @@
 export function generateResume({ basicInfo, professionalSummary, education, workExperiences, projects, skills, achievements, customSections }) {
     const htmlLines = [
-        `<div class="resume-wrapper" style="font-family: 'EB Garamond', Georgia, serif; font-feature-settings: 'lnum'; font-variant-numeric: lining-nums; line-height: 1.3; color: #333; padding: 10px 20px;">`,
+        `<div class="resume-wrapper" style="font-family: Arial, Calibri, Georgia; font-feature-settings: 'lnum'; font-variant-numeric: lining-nums; line-height: 1.3; color: #333; padding: 10px 20px;">`,
         `  <div class="header" style="text-align: center; margin-bottom: 12px;">`,
         `    <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 6px; margin-top: 0; border:none;">${basicInfo.name?.replace(/[<>&"]/g, '') || 'Name'}</h1>`,
         `    <div style="font-size: 13px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; line-height: 1.5;">`
     ];
 
-    if (basicInfo.email) htmlLines.push(`      <span><a href="mailto:${basicInfo.email}" style="color: #2563eb; text-decoration: none;">✉ ${basicInfo.email}</a></span>`);
-    if (basicInfo.contactNumber) htmlLines.push(`      <span>📞 ${basicInfo.contactNumber}</span>`);
-    if (basicInfo.location) htmlLines.push(`      <span>📍 ${basicInfo.location}</span>`);
+    if (basicInfo.email) htmlLines.push(`      <span><a href="mailto:${basicInfo.email}" style="color: #2563eb; text-decoration: none;">${basicInfo.email}</a></span>`);
+    if (basicInfo.contactNumber) htmlLines.push(`      <span> ${basicInfo.contactNumber}</span>`);
+    if (basicInfo.location) htmlLines.push(`      <span>${basicInfo.location}</span>`);
     htmlLines.push(`    </div>`);
     htmlLines.push(`    <div style="font-size: 13px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 3px;">`);
-    if (basicInfo.linkedin) htmlLines.push(`      <span><a href="${basicInfo.linkedin}" style="color: #2563eb; text-decoration: none;">LinkedIn</a></span>`);
-    if (basicInfo.github) htmlLines.push(`      <span><a href="${basicInfo.github}" style="color: #2563eb; text-decoration: none;">GitHub</a></span>`);
-    if (basicInfo.portfolio) htmlLines.push(`      <span><a href="${basicInfo.portfolio}" style="color: #2563eb; text-decoration: none;">Portfolio</a></span>`);
+    if (basicInfo.linkedin) htmlLines.push(`      <span><a href="${basicInfo.linkedin}" style="color: #2563eb; text-decoration: none;">${basicInfo.linkedin}</a></span>`);
+    if (basicInfo.github) htmlLines.push(`      <span><a href="${basicInfo.github}" style="color: #2563eb; text-decoration: none;">${basicInfo.github}</a></span>`);
+    if (basicInfo.portfolio) htmlLines.push(`      <span><a href="${basicInfo.portfolio}" style="color: #2563eb; text-decoration: none;">${basicInfo.portfolio}</a></span>`);
     htmlLines.push(`    </div>`);
     htmlLines.push(`  </div>`);
 
@@ -91,7 +91,7 @@ export function generateResume({ basicInfo, professionalSummary, education, work
             if (proj.liveDemoLink) 
                 htmlLines.push(`        <a href="${proj.liveDemoLink}" target="_blank" style="color: #2563eb; text-decoration: none; font-size: 12px;">Live Demo</a>`);
             if (proj.githubLink)
-                htmlLines.push(`        <a href="${proj.githubLink}" target="_blank" style="color: #2563eb; text-decoration: none; font-size: 12px;">GitHub</a>`);
+                htmlLines.push(`        <a href="${proj.githubLink}" target="_blank" style="color: #2563eb; text-decoration: none; font-size: 12px;">GitHub Repo</a>`);
             
             htmlLines.push(`      </div>`);
             htmlLines.push(`      </div>`);
