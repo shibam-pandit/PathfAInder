@@ -4,7 +4,7 @@ import { getIndustryInsights } from "@/lib/services/industry_insights.service";
 export async function GET() {
     try {
         const industryData = await getIndustryInsights();
-        return NextResponse.json(industryData);
+        return NextResponse.json(industryData, { status: 200 });
     } catch (error) {
         console.error("Error fetching industry insights:", error);
 

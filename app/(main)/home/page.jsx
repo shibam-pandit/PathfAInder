@@ -6,6 +6,7 @@ import Dashboard from './_component/Dashboard';
 import { format } from 'date-fns'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { TrendingUp, Zap, BarChart3, Award, CheckCircle, ListTree, Calendar, AlertTriangle } from 'lucide-react'
+import axios from 'axios';
 
 const InfoCard = ({ title, content, icon, description }) => {
   const Icon = icon
@@ -66,18 +67,16 @@ export default function Home() {
     const fetchData = async () => {
       try {
         // Check onboarding status
-        const onboardingResponse = await fetch('/api/users/onboarding-status');
-        if (onboardingResponse.ok) {
-          const onboardingData = await onboardingResponse.json();
-          setOnboarding(onboardingData.completed);
+        const onboardingResponse = await axios.get('/api/users/onboarding-status');
+        if (onboardingResponse.status === 200) {
+          setOnboarding(onboardingResponse.data.completed);
 
           // If onboarding is complete, fetch industry insights
-          if (onboardingData.completed) {
+          if (onboardingResponse.data.completed) {
             try {
-              const industryResponse = await fetch('/api/industry-insights');
-              if (industryResponse.ok) {
-                const industryData = await industryResponse.json();
-                setIndustry(industryData);
+              const industryResponse = await axios.get('/api/industry-insights');
+              if (industryResponse.status === 200) {
+                setIndustry(industryResponse.data);
               } else {
                 const errorData = await industryResponse.json();
                 setHasError(true);

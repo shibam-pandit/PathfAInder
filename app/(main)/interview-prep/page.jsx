@@ -8,6 +8,7 @@ import PreviousQuizes from './_components/PreviousQuizes';
 import { Card } from '@/components/ui/card';
 import { TrendingUp, BookOpen, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
 
 const InterviewPage = () => {
   const router = useRouter()
@@ -18,10 +19,9 @@ const InterviewPage = () => {
   useEffect(() => {
     const fetchQuizData = async () => {
       try {
-        const response = await fetch('/api/interview-prep/getHistory');
-        if (response.ok) {
-          const data = await response.json();
-          setQuizData(data);
+        const response = await axios.get('/api/interview-prep/getHistory');
+        if (response.status === 200) {
+          setQuizData(response.data);
         } else {
           setHasQuizDataError(true);
         }

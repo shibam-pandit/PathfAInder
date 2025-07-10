@@ -1,0 +1,16 @@
+name: Cover Letter Cleanup
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # Every day at 1 AM UTC
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger cleanup endpoint
+        run: |
+          curl -X GET https://pathfainder.vercel.app/api/cleanup \
+          -H "x-cron-secret: ${{ secrets.CRON_SECRET }}"

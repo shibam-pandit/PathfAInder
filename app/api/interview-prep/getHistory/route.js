@@ -12,7 +12,7 @@ export async function GET() {
             );
         }
 
-        return NextResponse.json(quizData);
+        return NextResponse.json(quizData, { status: 200 });
     } catch (error) {
         console.error("Error getting quiz history:", error);
         return NextResponse.json(
