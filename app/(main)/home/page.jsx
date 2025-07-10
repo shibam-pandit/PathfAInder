@@ -1,14 +1,13 @@
-import React from 'react'
-import { checkOnboardingCompleteStatus } from '@/lib/services/users.service'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import OnboardingForm from './_component/Onboarding';
-import { getIndustryInsights } from '@/lib/services/industry_insights.service';
 import Dashboard from './_component/Dashboard';
 import { format } from 'date-fns'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { TrendingUp, Zap, BarChart3, Award, CheckCircle, ListTree, Calendar, AlertTriangle } from 'lucide-react'
 
-const InfoCard = async ({ title, content, icon, description }) => {
-  'use server'
+const InfoCard = ({ title, content, icon, description }) => {
   const Icon = icon
   return (
     <Card className="shadow-lg transition-shadow duration-300 border-l-4 border-purple-500 bg-white group">
@@ -24,8 +23,7 @@ const InfoCard = async ({ title, content, icon, description }) => {
   )
 }
 
-const ListCard = async ({ title, items, icon, description }) => {
-  'use server'
+const ListCard = ({ title, items, icon, description }) => {
   const Icon = icon;
   return (
     <Card className="shadow-lg transition-shadow duration-300 border-l-4 border-purple-500 bg-white group">
@@ -57,31 +55,77 @@ const ListCard = async ({ title, items, icon, description }) => {
   )
 }
 
-export default async function Home() {
-  let onboarding = await checkOnboardingCompleteStatus();
-  console.log('Onboarding status:', onboarding);
-  if (onboarding === false) {
-    return <OnboardingForm />
+export default function Home() {
+  const [onboarding, setOnboarding] = useState(null);
+  const [industry, setIndustry] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Check onboarding status
+        const onboardingResponse = await fetch('/api/users/onboarding-status');
+        if (onboardingResponse.ok) {
+          const onboardingData = await onboardingResponse.json();
+          setOnboarding(onboardingData.completed);
+
+          // If onboarding is complete, fetch industry insights
+          if (onboardingData.completed) {
+            try {
+              const industryResponse = await fetch('/api/industry-insights');
+              if (industryResponse.ok) {
+                const industryData = await industryResponse.json();
+                setIndustry(industryData);
+              } else {
+                const errorData = await industryResponse.json();
+                setHasError(true);
+
+                // Handle specific error types
+                if (errorData.error === 'AI_SERVICE_UNAVAILABLE') {
+                  setErrorMessage('Industry insights are temporarily unavailable due to high AI service demand. Other features are still accessible.');
+                } else if (errorData.error === 'NO_INDUSTRY_SET') {
+                  setErrorMessage('Please complete your profile setup to view industry insights.');
+                } else {
+                  setErrorMessage('Unable to load industry insights at the moment. Please try again later.');
+                }
+              }
+            } catch (error) {
+              console.error('Failed to fetch industry insights:', error);
+              setHasError(true);
+              setErrorMessage('Industry insights are temporarily unavailable due to high AI service demand. Other features are still accessible.');
+            }
+          }
+        } else {
+          setHasError(true);
+          setErrorMessage('Failed to check onboarding status');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setHasError(true);
+        setErrorMessage('Unable to load dashboard data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen p-4 sm:p-6 lg:p-8 bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>Loading your dashboard...</p>
+        </div>
+      </div>
+    );
   }
 
-  let industry = null;
-  let hasError = false;
-  let errorMessage = '';
-
-  try {
-    industry = await getIndustryInsights();
-  } catch (error) {
-    console.error('Failed to fetch industry insights:', error);
-    hasError = true;
-    
-    // Check for specific error types
-    if (error.message.includes('AI_SERVICE_UNAVAILABLE') || error.message.includes('AI service temporarily unavailable')) {
-      errorMessage = 'Industry insights are temporarily unavailable due to high AI service demand. Other features are still accessible.';
-    } else if (error.message.includes('User has no industry set')) {
-      errorMessage = 'Please complete your profile setup to view industry insights.';
-    } else {
-      errorMessage = 'Unable to load industry insights at the moment. Please try again later.';
-    }
+  if (onboarding === false) {
+    return <OnboardingForm />
   }
 
   // If there's an error or no industry data, show error UI
@@ -132,7 +176,7 @@ export default async function Home() {
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-7" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
             Industry Insights
           </h1>
-          
+
           {/* Show warning if data might be stale */}
           {industry.isStale && (
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6 max-w-2xl mx-auto">
@@ -144,7 +188,7 @@ export default async function Home() {
               </div>
             </div>
           )}
-          
+
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0 sm:space-x-6 text-sm text-gray-600" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-purple-600" />

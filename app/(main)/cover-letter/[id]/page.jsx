@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";  // This page should always be dynamic to reflect the latest cover letter data
+
+
 import React from 'react'
 import { getCoverLetterById } from '@/lib/services/cover_letter.service';
 import CoverLetterView from '../_components/CoverLetterView';

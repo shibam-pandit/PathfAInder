@@ -1,28 +1,54 @@
-import React from 'react'
-import { getQuizHistoryByUserId } from '@/lib/services/interview_prep.service'
+'use client'
+
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import OverView from './_components/OverView';
 import PastScoreCard from './_components/PastScoreCard';
 import PreviousQuizes from './_components/PreviousQuizes';
 import { Card } from '@/components/ui/card';
 import { TrendingUp, BookOpen, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { redirect } from 'next/navigation';
 
-const InterviewPage = async () => {
-  let quizData = null;
-  let hasQuizDataError = false;
-  
-  try {
-    quizData = await getQuizHistoryByUserId();
-  } catch (error) {
-    console.error("Failed to fetch quiz data:", error);
-    hasQuizDataError = true;
-    // Don't show toast on server side - this will be handled on client side if needed
+const InterviewPage = () => {
+  const router = useRouter()
+  const [quizData, setQuizData] = useState(null);
+  const [hasQuizDataError, setHasQuizDataError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchQuizData = async () => {
+      try {
+        const response = await fetch('/api/interview-prep/getHistory');
+        if (response.ok) {
+          const data = await response.json();
+          setQuizData(data);
+        } else {
+          setHasQuizDataError(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch quiz data:", error);
+        setHasQuizDataError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchQuizData();
+  }, []);
+
+  const startQuiz = () => {
+    router.push('/interview-prep/mock');
   }
 
-  const startQuiz = async () => {
-    'use server';
-    redirect('/interview-prep/mock');
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-r from-purple-300/20 via-gray-100 to-indigo-500/20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading interview prep dashboard...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -38,16 +64,14 @@ const InterviewPage = async () => {
 
           {/* Start New Quiz Button */}
           <div className="flex justify-center lg:justify-end py-5">
-            <form action={startQuiz}>
-              <Button
-                type="submit"
-                className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-                size="lg"
-              >
-                <Plus className="w-5 h-5 mr-2" />
-                Start New Quiz
-              </Button>
-            </form>
+            <Button
+              onClick={startQuiz}
+              className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
+              size="lg"
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Start New Quiz
+            </Button>
           </div>
         </div>
 
@@ -63,8 +87,8 @@ const InterviewPage = async () => {
                   {hasQuizDataError ? "Unable to load quiz data" : "No quiz data available"}
                 </h3>
                 <p className="text-gray-500">
-                  {hasQuizDataError 
-                    ? "There was an error fetching your quiz history. You can still start a new quiz." 
+                  {hasQuizDataError
+                    ? "There was an error fetching your quiz history. You can still start a new quiz."
                     : "Start your first quiz to see your progress overview here."}
                 </p>
               </div>
@@ -97,8 +121,8 @@ const InterviewPage = async () => {
                     {hasQuizDataError ? "Performance data unavailable" : "No performance data yet"}
                   </h3>
                   <p className="text-gray-500">
-                    {hasQuizDataError 
-                      ? "Unable to load your performance analytics at the moment." 
+                    {hasQuizDataError
+                      ? "Unable to load your performance analytics at the moment."
                       : "Complete your first quiz to see your performance trends."}
                   </p>
                 </div>
@@ -130,8 +154,8 @@ const InterviewPage = async () => {
                     {hasQuizDataError ? "Quiz history unavailable" : "No quiz history yet"}
                   </h3>
                   <p className="text-gray-500">
-                    {hasQuizDataError 
-                      ? "Unable to load your quiz history at the moment." 
+                    {hasQuizDataError
+                      ? "Unable to load your quiz history at the moment."
                       : "Your completed quizzes will appear here after you take your first quiz."}
                   </p>
                 </div>
