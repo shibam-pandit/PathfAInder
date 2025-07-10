@@ -52,7 +52,7 @@ const ResultCard = (props) => {
                         </div>
                     </div>
                     <p className="text-center text-purple-100 text-base sm:text-lg">
-                        You've completed your mock interview quiz
+                        You&apos;ve completed your mock interview quiz
                     </p>
                 </CardHeader>
                 

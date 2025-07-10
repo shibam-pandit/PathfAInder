@@ -7,14 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Clock, CheckCircle2, ArrowRight } from 'lucide-react';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { toast } from 'sonner';
 import ResultCard from './ResultCard';
 import { useLayoutVisibility } from '@/app/providres/LayoutVisibilityContext';
 
 const Quiz = (props) => {
   const { quizData } = props;
-  const questions = quizData?.questions || [];
+  const questions = useMemo(() => quizData?.questions || [], [quizData?.questions]);
   const TOTAL_TIME = 10 * 60; // 10 minutes in seconds
 
   const [questionNumber, setQuestionNumber] = useState(0);
@@ -35,7 +35,7 @@ const Quiz = (props) => {
     return () => {
       setHideLayout(false); // show them again on unmount
     };
-  }, []);
+  }, [setHideLayout]);
 
   // Timer for quiz (only runs when quiz has started)
   useEffect(() => {
@@ -53,7 +53,7 @@ const Quiz = (props) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [quizStarted, resultData, isSubmitting]);
+  }, [quizStarted, resultData, isSubmitting, submitQuizHandler]);
 
   // Fullscreen handling
   useEffect(() => {
@@ -91,7 +91,7 @@ const Quiz = (props) => {
 
       return () => clearInterval(warningTimer);
     }
-  }, [fullScreenWarning, quizStarted, resultData]);
+  }, [fullScreenWarning, quizStarted, resultData, submitQuizHandler]);
 
   // Exit fullscreen when quiz is complete
   useEffect(() => {
@@ -128,7 +128,7 @@ const Quiz = (props) => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [quizStarted, resultData, isSubmitting]);
+  }, [quizStarted, resultData, isSubmitting, submitQuizHandler]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -136,7 +136,7 @@ const Quiz = (props) => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const submitQuizHandler = async () => {
+  const submitQuizHandler = useCallback(async () => {
     setIsSubmitting(true);
 
     let score = 0;
@@ -180,7 +180,7 @@ const Quiz = (props) => {
       return;
 
     }
-  };
+  }, [questions, answers, quizData.category, setIsSubmitting, setResultData, setQuizStarted, setAnswers, setQuestionNumber]);
 
   const handleFullScreenRequest = async () => {
     try {
@@ -234,7 +234,7 @@ const Quiz = (props) => {
           <div className="space-y-2">
             <h3 className="text-xl font-semibold text-gray-800">Analyzing Your Answers</h3>
             <p className="text-gray-600 max-w-md mx-auto">
-              We're processing your responses and preparing personalized feedback to help you improve.
+              We&apos;re processing your responses and preparing personalized feedback to help you improve.
             </p>
           </div>
           <div className="flex justify-center space-x-1">

@@ -130,7 +130,7 @@ const AnalyzeResult = ({ analyzeResult }) => {
                                         <p key={i} className="mb-2 last:mb-0">{parseMarkdownBold(paragraph)}</p>
                                     ));
                                 })() : 
-                                <p>"No suggestions available. Your resume is already optimized!"</p>
+                                <p>No suggestions available. Your resume is already optimized!</p>
                             }
                         </div>
                     </div>

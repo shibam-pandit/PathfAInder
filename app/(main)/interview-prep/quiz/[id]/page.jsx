@@ -82,7 +82,7 @@ const QuizHistory = () => {
             </div>
             <h2 className="text-2xl font-bold text-slate-800 mb-3">Quiz Not Found</h2>
             <p className="text-slate-600 mb-8 leading-relaxed">
-              The quiz you're looking for doesn't exist or has been removed from our system.
+              The quiz you&apos;re looking for doesn&apos;t exist or has been removed from our system.
             </p>
             <Button
               onClick={() => router.push("/interview-prep")}

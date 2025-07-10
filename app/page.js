@@ -267,7 +267,7 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-slate-800 mb-3">Cover Letter Assistant</h3>
                 <p className="text-slate-600 mb-6">
                   Generate personalized cover letters that showcase your unique value proposition and align perfectly
-                  with the company's culture and requirements.
+                  with the company&apos;s culture and requirements.
                 </p>
                 <Link
                   href="/cover-letter"
@@ -626,7 +626,7 @@ export default function Home() {
                       <p className="text-sm text-slate-500">{testimonial.role}</p>
                     </div>
                   </div>
-                  <p className="text-slate-600 italic">"{testimonial.quote}"</p>
+                  <p className="text-slate-600 italic">&quot;{testimonial.quote}&quot;</p>
                 </div>
               ))}
             </div>
@@ -639,7 +639,7 @@ export default function Home() {
             <div className="max-w-4xl mx-auto text-center reveal opacity-0">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Accelerate Your Career Journey?</h2>
               <p className="text-xl text-violet-100 mb-10 max-w-2xl mx-auto">
-                Join thousands of job seekers who have successfully landed their dream jobs with PathfAInder's
+                Join thousands of job seekers who have successfully landed their dream jobs with PathfAInder&apos;s
                 AI-powered guidance.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

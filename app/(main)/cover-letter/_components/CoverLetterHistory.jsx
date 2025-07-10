@@ -11,6 +11,11 @@ const CoverLetterHistory = async () => {
         <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 text-center sm:text-left">
           Cover Letter History
         </h2>
+        <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+          <p className="text-sm text-amber-800">
+            <span className="font-medium">Note:</span> Cover letters are automatically deleted after 10 days of creation to maintain privacy and storage efficiency.
+          </p>
+        </div>
       </CardHeader>
       <CardContent className="px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">
         {coverLetterHistory.length > 0 ? (

@@ -74,7 +74,7 @@ const Mock = () => {
                         <div className='bg-white/80 backdrop-blur-sm border border-purple-200 rounded-3xl p-8 shadow-xl'>
                             <div className='mb-6'>
                                 <h2 className='text-2xl font-bold text-gray-800 mb-2'>Start Your Practice Session</h2>
-                                <p className='text-gray-600'>Paste your job description or specify the topics you'd like to practice</p>
+                                <p className='text-gray-600'>Paste your job description or specify the topics you would like to practice</p>
                             </div>
 
                             <div className='space-y-12 mt-10'>
