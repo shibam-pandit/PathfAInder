@@ -39,14 +39,14 @@ CREATE TABLE resume (
 
 CREATE TABLE coverletter (
     id SERIAL PRIMARY KEY,
-    userId INT REFERENCES users(id) ON DELETE CASCADE,
+    userid INT REFERENCES users(id) ON DELETE CASCADE,
     content TEXT,
-    jobDescription TEXT,
-    companyName VARCHAR(255),
-    jobTitle VARCHAR(255),
-    status VARCHAR(50),
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    jobdescription TEXT,
+    companyname VARCHAR(255),
+    jobtitle VARCHAR(255),
+    tone VARCHAR(50),
+    createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE assessment (
