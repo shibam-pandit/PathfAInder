@@ -3,25 +3,21 @@ import { getQuizHistoryByUserId } from '@/lib/services/interview_prep.service'
 import OverView from './_components/OverView';
 import PastScoreCard from './_components/PastScoreCard';
 import PreviousQuizes from './_components/PreviousQuizes';
-import { Card, CardContent } from '@/components/ui/card';
-import { TrendingUp, Award, BookOpen, Plus } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { TrendingUp, BookOpen, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { redirect } from 'next/navigation';
 
 const InterviewPage = async () => {
-  const quizData = await getQuizHistoryByUserId();
-  if (!quizData) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50 flex items-center justify-center">
-        <Card className="p-8 text-center shadow-xl border-0">
-          <CardContent className="pt-6">
-            <BookOpen className="w-16 h-16 mx-auto text-purple-400 mb-4" />
-            <h2 className="text-2xl font-bold text-gray-700 mb-2">No Quiz Data Found</h2>
-            <p className="text-gray-500">Start your interview preparation journey today!</p>
-          </CardContent>
-        </Card>
-      </div>
-    )
+  let quizData = null;
+  let hasQuizDataError = false;
+  
+  try {
+    quizData = await getQuizHistoryByUserId();
+  } catch (error) {
+    console.error("Failed to fetch quiz data:", error);
+    hasQuizDataError = true;
+    // Don't show toast on server side - this will be handled on client side if needed
   }
 
   const startQuiz = async () => {
@@ -30,21 +26,14 @@ const InterviewPage = async () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50">
-      <div className="max-w-7xl mx-auto px-6 py-8 pt-32">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          {/* <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl mb-6 shadow-lg">
-            <Award className="w-10 h-10 text-white" />
-          </div> */}
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-900 to-indigo-900 bg-clip-text text-transparent my-4">
-            Interview Preparation Dashboard
+    <div className="min-h-screen bg-gradient-to-r from-purple-300/20 via-gray-100 to-indigo-500/20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 md:py-28 lg:py-32">
+        <div className="text-center mb-12 sm:mb-16 space-y-4 sm:space-y-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-slate-800">
+            Interview Prep Dashboard
           </h1>
-          {/* <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-7" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
-            Interview Preparation Dashboard
-          </h1> */}
-          <p className="text-md text-gray-600 max-w-2xl mx-auto mb-8">
-            Track your progress, analyze your performance, and master your interview skills
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Track your progress, analyze your performance, and prepare for your next interview.
           </p>
 
           {/* Start New Quiz Button */}
@@ -64,7 +53,23 @@ const InterviewPage = async () => {
 
         {/* Overview Cards */}
         <div className="mb-12">
-          <OverView quizData={quizData} />
+          {quizData ? (
+            <OverView quizData={quizData} />
+          ) : (
+            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden p-6">
+              <div className="text-center py-8">
+                <BookOpen className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                  {hasQuizDataError ? "Unable to load quiz data" : "No quiz data available"}
+                </h3>
+                <p className="text-gray-500">
+                  {hasQuizDataError 
+                    ? "There was an error fetching your quiz history. You can still start a new quiz." 
+                    : "Start your first quiz to see your progress overview here."}
+                </p>
+              </div>
+            </Card>
+          )}
         </div>
 
         {/* Main Content Grid */}
@@ -83,7 +88,21 @@ const InterviewPage = async () => {
               </div>
             </div>
             <div className="p-6">
-              <PastScoreCard quizData={quizData} />
+              {quizData ? (
+                <PastScoreCard quizData={quizData} />
+              ) : (
+                <div className="text-center py-8">
+                  <TrendingUp className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                    {hasQuizDataError ? "Performance data unavailable" : "No performance data yet"}
+                  </h3>
+                  <p className="text-gray-500">
+                    {hasQuizDataError 
+                      ? "Unable to load your performance analytics at the moment." 
+                      : "Complete your first quiz to see your performance trends."}
+                  </p>
+                </div>
+              )}
             </div>
           </Card>
 
@@ -102,7 +121,21 @@ const InterviewPage = async () => {
               </div>
             </div>
             <div className="p-6">
-              <PreviousQuizes quizData={quizData} />
+              {quizData ? (
+                <PreviousQuizes quizData={quizData} />
+              ) : (
+                <div className="text-center py-8">
+                  <BookOpen className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                    {hasQuizDataError ? "Quiz history unavailable" : "No quiz history yet"}
+                  </h3>
+                  <p className="text-gray-500">
+                    {hasQuizDataError 
+                      ? "Unable to load your quiz history at the moment." 
+                      : "Your completed quizzes will appear here after you take your first quiz."}
+                  </p>
+                </div>
+              )}
             </div>
           </Card>
         </div>

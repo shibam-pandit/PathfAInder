@@ -33,7 +33,7 @@ const Mock = () => {
             const result = await axios.post('/api/interview-prep/getQuestions', {
                 userPrompt
             });
-            
+
             if (!result.data || result.status !== 200) {
                 alert('No questions found for the provided prompt. Please try again with a different prompt.');
                 setLoading(false);
@@ -57,30 +57,15 @@ const Mock = () => {
     }
 
     return (
-        <div className='min-h-screen bg-gradient-to-br from-purple-100 via-white to-purple-200 pt-28 pb-12'>
-            <Toaster position='top-center' richColors closeButton={false} />
-            {!quizData ? (
-                <div className='container mx-auto px-4 py-8 max-w-6xl'>
-                    {/* Header Section */}
-                    {/* <div className='flex items-center gap-4 mb-5'>
-                        <button
-                            className='flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-all duration-300 hover:scale-105'
-                            onClick={() => router.push('/interview')}
-                        >
-                            <ArrowLeft className='w-5 h-5' />
-                            <span className='font-medium hover:underline cursor-pointer'>Back</span>
-                        </button>
-                    </div> */}
-
-                    {/* Hero Section */}
-                    <div className='text-center mb-14'>
-                        <h1 className='text-5xl font-bold bg-gradient-to-r from-purple-900 to-indigo-900 bg-clip-text text-transparent mb-4 animate-fade-in'>
+        <div className="min-h-screen bg-gradient-to-r from-purple-300/20 via-gray-100 to-indigo-500/20">
+            {!quizData ?
+                (<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 md:py-28 lg:py-32">
+                    <div className="text-center mb-12 sm:mb-16 space-y-4 sm:space-y-6">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-slate-800">
                             Ace Your Next Interview
                         </h1>
-                        
-                        <p className='text-md text-gray-600 max-w-2xl mx-auto leading-relaxed animate-fade-in'>
-                            Practice with AI-generated questions tailored to your job description. 
-                            Get ready to impress your interviewer with confidence.
+                        <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                            Practice with tailored interview questions based on your job description or topics of interest.
                         </p>
                     </div>
 
@@ -106,11 +91,10 @@ const Mock = () => {
                                 </div>
 
                                 <button
-                                    className={`w-full py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 transform ${
-                                        loading 
-                                            ? 'bg-gray-400 cursor-not-allowed' 
-                                            : 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 hover:scale-105 hover:shadow-xl active:scale-95 cursor-pointer'
-                                    } text-white shadow-lg`}
+                                    className={`w-full py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 transform ${loading
+                                        ? 'bg-gray-400 cursor-not-allowed'
+                                        : 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 hover:scale-105 hover:shadow-xl active:scale-95 cursor-pointer'
+                                        } text-white shadow-lg`}
                                     onClick={StartQuiz}
                                     disabled={loading}
                                 >
@@ -172,11 +156,11 @@ const Mock = () => {
                         </div>
                     </div>
 
-                    
+
                 </div>
-            ) : (
-                <Quiz quizData={quizData} setQuizData={setQuizData} />
-            )}
+                ) : (
+                    <Quiz quizData={quizData} setQuizData={setQuizData} />
+                )}
         </div>
     )
 }

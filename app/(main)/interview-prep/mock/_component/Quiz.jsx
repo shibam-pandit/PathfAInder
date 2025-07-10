@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import { Clock, CheckCircle2, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 import ResultCard from './ResultCard';
 import { useLayoutVisibility } from '@/app/providres/LayoutVisibilityContext';
 
@@ -139,38 +139,10 @@ const Quiz = (props) => {
   const submitQuizHandler = async () => {
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
     let score = 0;
     for (let i = 0; i < questions.length; i++) {
       if (questions[i].correct_answer === answers[i]) {
         score++;
-      }
-    }
-
-    let tip = 'Great Job! You have answered all questions correctly. Keep up the good work!';
-
-    if (score !== questions.length) {
-      const data = {
-        questions: questions,
-        answers: answers,
-      };
-
-      try {
-        const tipResponse = await axios.post('/api/interview-prep/getImprovementTip', {
-          data: data,
-        });
-        if (tipResponse.status !== 200 || !tipResponse.data) {
-          toast.error('Failed to get improvement tip. Please try again.');
-          setIsSubmitting(false);
-          return;
-        }
-        tip = tipResponse.data.tip;
-      } catch (error) {
-        console.error('Error getting improvement tip:', error);
-        toast.error('Failed to submit quiz. Please try again.');
-        setIsSubmitting(false);
-        return;
       }
     }
 
@@ -182,7 +154,7 @@ const Quiz = (props) => {
     const submittedQuiz = {
       questions: questionsWithUserAnswers,
       quizscore: score,
-      improvementTip: tip,
+      // improvementTip: tip,
       category: quizData.category,
     };
 
@@ -196,11 +168,12 @@ const Quiz = (props) => {
         setQuizStarted(false); // Reset quiz started state
         setAnswers([]); // Reset answers for next quiz
         setQuestionNumber(0); // Reset question number
-        setIsSubmitting(false); // Reset submitting state
         toast.success(`Quiz submitted successfully! Your score is ${score} out of ${questions.length}.`);
       } else {
         toast.error("Failed to submit quiz. Please try again.");
       }
+
+      setIsSubmitting(false); // Reset submitting state
     } catch (error) {
       console.error("Error submitting quiz:", error);
       toast.error("Failed to submit quiz. Please try again.");
@@ -227,7 +200,6 @@ const Quiz = (props) => {
   if (!quizStarted && !resultData) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <Toaster position="top-center" richColors closeButton={false} />
         <Card className="bg-white p-8 rounded-xl shadow-xl max-w-md text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome to the Quiz</h2>
           <p className="text-gray-600 mb-6">
@@ -277,8 +249,6 @@ const Quiz = (props) => {
 
   return (
     <div className="relative max-w-4xl mx-auto space-y-6">
-      <Toaster position="top-center" richColors closeButton={false} />
-
 
       {/* Fullscreen Warning Overlay */}
       {fullScreenWarning && (

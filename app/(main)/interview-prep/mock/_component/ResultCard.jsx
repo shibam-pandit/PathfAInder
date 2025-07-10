@@ -95,7 +95,7 @@ const ResultCard = (props) => {
                     </div>
 
                     {/* Improvement Tip */}
-                    {resultData.improvementTip && (
+                    {resultData.improvementtip && (
                         <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-2xl p-6 mb-8">
                             <div className="flex items-start space-x-3">
                                 <div className="bg-purple-100 p-2 rounded-lg flex-shrink-0">
@@ -106,7 +106,7 @@ const ResultCard = (props) => {
                                         Personalized Improvement Tip
                                     </h3>
                                     <p className="text-purple-800 leading-relaxed">
-                                        {resultData.improvementTip}
+                                        {resultData.improvementtip}
                                     </p>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@ const ResultCard = (props) => {
                         <Button 
                             variant="outline" 
                             className="border-2 border-purple-200 text-purple-700 hover:bg-purple-200 font-semibold px-8 py-3 rounded-xl transition-all duration-200 cursor-pointer"
-                            onClick={() => window.location.reload()}
+                            onClick={() => redirect('/interview-prep')}
                         >
                             Take Another Quiz
                         </Button>
