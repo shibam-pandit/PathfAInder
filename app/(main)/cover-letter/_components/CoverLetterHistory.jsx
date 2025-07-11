@@ -82,7 +82,7 @@ const CoverLetterHistory = () => {
                     at {letter.companyname}
                   </p>
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                    {new Date(letter.createdat).toLocaleDateString()}
+                    {new Date(letter.createdat).toLocaleDateString('en-GB')}
                   </p>
                 </div>
 

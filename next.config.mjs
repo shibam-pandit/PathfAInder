@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    serverExternalPackages: ['playwright-core', 'playwright-aws-lambda'],
+    // No external packages needed for microservice approach
 };
 
 export default nextConfig;

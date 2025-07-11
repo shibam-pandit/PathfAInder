@@ -139,6 +139,7 @@ PathfAInder serves professionals at all career stages:
 - npm or yarn package manager
 - Google AI API key (for Gemini integration)
 - NextAuth secret (for authentication)
+- [HTML to PDF microservice](https://github.com/shibam-pandit/HTML2PDF_microservice) (for resume PDF generation)
 </details>
 
 <details>
@@ -154,6 +155,11 @@ cd pathfainder
 
 # Install dependencies
 npm install
+
+# Set up the PDF microservice
+# Clone and set up the PDF microservice from:
+# https://github.com/shibam-pandit/HTML2PDF_microservice
+# Follow the installation guide in that repository
 
 # Set up environment variables
 cp .env.example .env.local
@@ -181,6 +187,9 @@ NEXTAUTH_SECRET="your-nextauth-secret-here"
 
 # Google AI API Configuration
 GEMINI_API_KEY="your-google-ai-api-key"
+
+# PDF Service Configuration
+PDF_SERVICE_URL="http://localhost:4000"  # URL to PDF microservice (https://github.com/shibam-pandit/HTML2PDF_microservice)
 
 # Scheduled Jobs Configuration
 CRON_SECRET="your-secret-key-for-scheduled-cleanup-tasks"
@@ -210,7 +219,7 @@ GITHUB_CLIENT_SECRET="your-github-client-secret"
 - **API Routes**: Next.js API Routes
 - **Authentication**: [NextAuth.js 4.24.11](https://next-auth.js.org/)
 - **AI Integration**: [Google Generative AI](https://ai.google.dev/) (Gemini)
-- **PDF Generation**: [html2pdf.js](https://ekoopmans.github.io/html2pdf.js/)
+- **PDF Generation**: [html2pdf.js](https://ekoopmans.github.io/html2pdf.js/) (cover letters), [Dedicated microservice](https://github.com/shibam-pandit/HTML2PDF_microservice) using Puppeteer (resumes)
 - **HTTP Client**: [Axios](https://axios-http.com/)
 
 ### Development
@@ -437,7 +446,7 @@ IMPLIED.
 - [Google Gemini AI](https://ai.google.dev/) for powering the intelligent features
 - [Next.js](https://nextjs.org/) and [Vercel](https://vercel.com/) for the development framework and hosting
 - [Tailwind CSS](https://tailwindcss.com/) for the UI styling system
-- [Radix UI](https://www.radix-ui.com/) for accessible UI components
+- [Shadcn UI](https://ui.shadcn.com/) for accessible UI components
 - All open source contributors who have helped improve this project
 </details>
 

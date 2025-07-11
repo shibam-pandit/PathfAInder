@@ -17,21 +17,19 @@ const Footer = () => {
                             interviews.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" className="text-slate-400 hover:text-white">
+                            {/* LinkedIn */}
+                            <a href="https://www.linkedin.com/in/shibam-pandit" className="text-slate-400 hover:text-white" target="_blank" rel="noopener noreferrer">
                                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                                        clipRule="evenodd"
-                                    />
+                                    <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 20h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76 0-.97.78-1.76 1.75-1.76s1.75.79 1.75 1.76c0 .97-.78 1.76-1.75 1.76zm15.25 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.75 1.38-1.54 2.85-1.54 3.05 0 3.61 2.01 3.61 4.62v5.56z"/>
                                 </svg>
                             </a>
-                            <a href="#" className="text-slate-400 hover:text-white">
+                            {/* X (Twitter) */}
+                            <a href="https://x.com/Shibam_Pandit" target='_blank' className="text-slate-400 hover:text-white">
                                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                                    <path d="M17.53 2.477h3.07l-6.72 7.68 7.92 11.366h-6.22l-4.86-6.97-5.56 6.97H2.47l7.18-7.99L2 2.477h6.38l4.36 6.26 4.79-6.26zm-1.08 16.13h1.7L7.62 4.29h-1.8l10.63 14.317z"/>
                                 </svg>
                             </a>
-                            <a href="#" className="text-slate-400 hover:text-white">
+                            <a href="https://github.com/shibam-pandit" target='_blank' className="text-slate-400 hover:text-white">
                                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path
                                         fillRule="evenodd"
@@ -62,8 +60,8 @@ const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/quizzes" className="hover:text-white">
-                                    Practice Quizzes
+                                <Link href="/resume-analyzer" className="hover:text-white">
+                                    Resume Analyzer
                                 </Link>
                             </li>
                         </ul>
