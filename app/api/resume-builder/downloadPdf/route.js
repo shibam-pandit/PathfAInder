@@ -24,7 +24,20 @@ export const POST = async (request) => {
         });
     } catch (error) {
         console.error('Error downloading PDF:', error);
-        return NextResponse.json({ error: 'Failed to download PDF' }, { status: 500 });
+        console.error('Error stack:', error.stack);
+        console.error('Error message:', error.message);
+
+        // Return more specific error information
+        const errorMessage = error.message.includes('chromium') || error.message.includes('brotli')
+            ? 'PDF generation service is currently unavailable. Please try again later.'
+            : error.message.includes('timeout')
+                ? 'PDF generation is taking too long. Please try with simpler content.'
+                : 'Failed to generate PDF. Please try again.';
+
+        return NextResponse.json({
+            error: errorMessage,
+            details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        }, { status: 500 });
     }
 
 };
