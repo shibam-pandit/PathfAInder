@@ -1,0 +1,10 @@
+{
+    "functions": {
+        "app/api/resume-builder/downloadPdf/route.js": {
+            "maxDuration": 300
+        },
+        "app/api/resume-builder/atsAnalysis/route.js": {
+            "maxDuration": 300
+        }
+    }
+}

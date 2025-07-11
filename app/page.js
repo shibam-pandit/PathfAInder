@@ -34,7 +34,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Navbar */}
       <Navbar />
-      
+
       <main>
         {/* Hero Section */}
         <section className="pt-32 pb-16 md:pt-40 md:pb-24">
@@ -205,7 +205,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {/* Feature 1 */}
               <div
                 className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 transition-all duration-300 hover:shadow-md reveal opacity-0"
@@ -316,6 +316,43 @@ export default function Home() {
                   </svg>
                 </Link>
               </div>
+
+              {/* Feature 4 - Resume Analyzer */}
+              <div
+                className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 transition-all duration-300 hover:shadow-md reveal opacity-0"
+                style={{ transitionDelay: "0.4s" }}
+              >
+                <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center text-white mb-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-7 w-7"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-slate-800 mb-3">Resume Analyzer</h3>
+                <p className="text-slate-600 mb-6">
+                  Get detailed insights on your resume&apos;s ATS compatibility, keyword optimization, and receive
+                  actionable feedback to improve your application success rate.
+                </p>
+                <Link
+                  href="/resume-analyzer"
+                  className="inline-flex items-center text-rose-600 font-medium hover:text-rose-700"
+                >
+                  Analyze Resume
+                  <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -372,7 +409,7 @@ export default function Home() {
 
             <div className="mt-16 text-center reveal opacity-0">
               <Link
-                href="/signup"
+                href="/register"
                 className="px-6 py-3 rounded-md bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-medium text-lg inline-block"
               >
                 Get Started Now
@@ -644,7 +681,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href="/signup"
+                  href="/register"
                   className="px-6 py-3 rounded-md bg-white text-violet-600 hover:bg-slate-100 font-medium text-center"
                 >
                   Get Started for Free
